@@ -11,19 +11,28 @@ public class Player : MonoBehaviour
     void Awake()
     {
         controls = new InputMaster();
-        controls.GamePlay.Movement.performed += ctx => move = ctx.ReadValue<Vector2>();
+        controls.GamePlay.Movement.performed += HandleMovement;
         controls.GamePlay.Movement.canceled += ctx => move = Vector2.zero;
+    }
+
+    void HandleMovement(InputAction.CallbackContext context)
+    {
+        Debug.Log($"Moving {context.valueType}");
+        Debug.Log($"Moving {context}");
+        move = context.ReadValue<Vector2>();
+        Debug.Log($"Moving {move}");
     }
 
     void Update()
     {
-        Vector2 m = new Vector2(move.x, move.y) * Time.deltaTime;
-        transform.Translate(m, Space.World);
+        Vector3 m = new Vector3(move.x, 0, move.y) * Time.deltaTime;
+        transform.Translate(m);
     }
 
     void OnEnable()
     {
         controls.GamePlay.Enable();
+        controls.GamePlay.Movement.performed += HandleMovement;
     }
 
     private void OnDisable()
