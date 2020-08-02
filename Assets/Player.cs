@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
     void HandleMovement(InputAction.CallbackContext context)
     {
         move = context.ReadValue<Vector2>();
-        # Debug.Log($"Moving {move}");
+        // Debug.Log($"Moving {move}");
     }
 
     void Update()
